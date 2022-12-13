@@ -12,3 +12,32 @@ int is_valid_size(matrix_t *a) {
 int is_valid_matrix(matrix_t *a) {
     return (is_valid_pointer(a) == SUCCESS && is_valid_size(a) == SUCCESS) ? SUCCESS : FAILURE;
 }
+
+int sum_and_sub(matrix_t *A, matrix_t *B, matrix_t *result, char operation) {
+    int return_code = 0;
+    if (is_valid_matrix(A) == SUCCESS && is_valid_matrix(B) == SUCCESS && is_valid_pointer(result) == SUCCESS) {
+        if (A -> rows == B -> rows && A -> columns == B -> columns) {
+            s21_create_matrix(A -> rows, A -> columns, result);
+            for (int i = 0; i < A -> rows; i++) {
+                for (int j = 0; j < A -> columns; j++) {
+                    double temp = 0;
+                    switch (operation) {
+                    case '+':
+                        temp = A -> matrix[i][j] + B -> matrix[i][j];
+                        break;
+                    case '-':
+                        temp = A -> matrix[i][j] - B -> matrix[i][j];
+                    default:
+                        break;
+                    }
+                    result -> matrix[i][j] = temp;
+                }
+            }
+        } else {
+            return_code = 2;
+        }
+    } else {
+        return_code = 1;
+    }
+    return return_code;
+}

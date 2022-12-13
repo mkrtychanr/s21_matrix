@@ -9,4 +9,6 @@ int is_valid_size(matrix_t *a);
 
 int is_valid_matrix(matrix_t *a);
 
-#endif  // SRC_S21+TOOLS_H_
+int sum_and_sub(matrix_t *A, matrix_t *B, matrix_t *result, char operation);
+
+#endif  // SRC_S21_TOOLS_H_
