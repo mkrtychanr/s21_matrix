@@ -1,7 +1,7 @@
 typedef struct matrix_struct matrix_t;
 
-#ifndef SRC_MATRIX_H_
-#define SRC_MATRIX_H_
+#ifndef SRC_S21_MATRIX_H_
+#define SRC_S21_MATRIX_H_
 
 #define SUCCESS 1
 #define FAILURE 0
@@ -35,4 +35,4 @@ int s21_determinant(matrix_t *A, double *result);
 int s21_inverse_matrix(matrix_t *A, matrix_t *result);
 
 
-#endif  // SRC_MATRIX_H_
+#endif  // SRC_S21_MATRIX_H_
