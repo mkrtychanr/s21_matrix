@@ -59,6 +59,57 @@ START_TEST(test_s21_determinant) {
 }
 END_TEST
 
+START_TEST(test_s21_calc_complements) {
+    matrix_t a;
+    matrix_t result;
+    matrix_t expected;
+    int return_code = 0;
+    s21_create_matrix(3, 3, &a);
+    s21_create_matrix(3, 3, &expected);
+    a.matrix[0][0] = 1;
+    a.matrix[0][1] = 2;
+    a.matrix[0][2] = 3;
+    a.matrix[1][0] = 0;
+    a.matrix[1][1] = 4;
+    a.matrix[1][2] = 2;
+    a.matrix[2][0] = 5;
+    a.matrix[2][1] = 2;
+    a.matrix[2][2] = 1;
+    expected.matrix[0][0] = 0;
+    expected.matrix[0][1] = 10;
+    expected.matrix[0][2] = -20;
+    expected.matrix[1][0] = 4;
+    expected.matrix[1][1] = -14;
+    expected.matrix[1][2] = 8;
+    expected.matrix[2][0] = -8;
+    expected.matrix[2][1] = -2;
+    expected.matrix[2][2] = 4;
+    return_code = s21_calc_complements(&a, &result);
+    ck_assert_int_eq(return_code, 0);
+    return_code = s21_eq_matrix(&result, &expected);
+    ck_assert_int_eq(return_code, SUCCESS);
+    s21_remove_matrix(&a);
+    s21_remove_matrix(&result);
+    s21_create_matrix(1, 1, &a);
+    s21_create_matrix(1, 1, &result);
+    a.matrix[0][0] = 1;
+    return_code = s21_calc_complements(&a, &result);
+    ck_assert_int_eq(return_code, 0);
+    ck_assert_int_eq(result.matrix[0][0], 1);
+    a.rows = 2;
+    return_code = s21_calc_complements(&a, &result);
+    ck_assert_int_eq(return_code, 2);
+    a.rows = 1;
+    return_code = s21_calc_complements(NULL, &result);
+    ck_assert_int_eq(return_code, 1);
+    return_code = s21_calc_complements(&a, NULL);
+    ck_assert_int_eq(return_code, 1);
+    s21_remove_matrix(&a);
+    s21_remove_matrix(&result);
+    s21_remove_matrix(&expected);
+}
+END_TEST
+
 Suite *s21_linear_algebra(void) {
   Suite *s;
   TCase *tc_core;
@@ -68,6 +119,7 @@ Suite *s21_linear_algebra(void) {
 
   tcase_add_test(tc_core, test_s21_transpose_matrix);
   tcase_add_test(tc_core, test_s21_determinant);
+  tcase_add_test(tc_core, test_s21_calc_complements);
 
   suite_add_tcase(s, tc_core);
 
