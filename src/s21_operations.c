@@ -24,4 +24,23 @@ int s21_mult_number(matrix_t *A, double number, matrix_t *result) {
     return return_code;
 }
 
-// int s21_mult_matrix(matrix_t *A, matrix_t *B, matrix_t *result);
+int s21_mult_matrix(matrix_t *A, matrix_t *B, matrix_t *result) {
+    int return_code = 0;
+    if (is_valid_matrix(A) == SUCCESS && is_valid_matrix(B) == SUCCESS && is_valid_pointer(result) == SUCCESS) {
+        if (A -> columns == B -> rows) {
+            s21_create_matrix(A -> rows, B -> columns, result);
+            for (int i = 0; i < A -> rows; i++) {
+                for (int j = 0; j < B -> columns; j++) {
+                    for (int k = 0; k < A -> columns; k++) {
+                        result -> matrix[i][j] += A -> matrix[i][k] * B -> matrix[k][j];
+                    }
+                }
+            }
+        } else {
+            return_code = 2;
+        }
+    } else {
+        return_code = 1;
+    }
+    return return_code;
+}
