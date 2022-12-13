@@ -18,22 +18,20 @@ int sum_and_sub(matrix_t *A, matrix_t *B, matrix_t *result, char operation) {
     if (is_valid_matrix(A) == SUCCESS && is_valid_matrix(B) == SUCCESS &&
                                     is_valid_pointer(result) == SUCCESS) {
         if (A -> rows == B -> rows && A -> columns == B -> columns) {
-            return_code = s21_create_matrix(A -> rows, A -> columns, result);
-            if (return_code == 0) {
-                for (int i = 0; i < A -> rows; i++) {
-                    for (int j = 0; j < A -> columns; j++) {
-                        double temp = 0;
-                        switch (operation) {
-                        case '+':
-                            temp = A -> matrix[i][j] + B -> matrix[i][j];
-                            break;
-                        case '-':
-                            temp = A -> matrix[i][j] - B -> matrix[i][j];
-                        default:
-                            break;
-                        }
-                        result -> matrix[i][j] = temp;
+            s21_create_matrix(A -> rows, A -> columns, result);
+            for (int i = 0; i < A -> rows; i++) {
+                for (int j = 0; j < A -> columns; j++) {
+                    double temp = 0;
+                    switch (operation) {
+                    case '+':
+                        temp = A -> matrix[i][j] + B -> matrix[i][j];
+                        break;
+                    case '-':
+                        temp = A -> matrix[i][j] - B -> matrix[i][j];
+                    default:
+                        break;
                     }
+                    result -> matrix[i][j] = temp;
                 }
             }
         } else {

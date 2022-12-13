@@ -12,12 +12,10 @@ int s21_sub_matrix(matrix_t *A, matrix_t *B, matrix_t *result) {
 int s21_mult_number(matrix_t *A, double number, matrix_t *result) {
     int return_code = 0;
     if (is_valid_matrix(A) == SUCCESS && is_valid_pointer(result) == SUCCESS) {
-        return_code = s21_create_matrix(A -> rows, A -> columns, result);
-        if (return_code == 0) {
-            for (int i = 0; i < A -> rows; i++) {
-                for (int j = 0; j < A -> columns; j++) {
-                    result -> matrix[i][j] = A -> matrix[i][j] * number;
-                }
+        s21_create_matrix(A -> rows, A -> columns, result);
+        for (int i = 0; i < A -> rows; i++) {
+            for (int j = 0; j < A -> columns; j++) {
+                result -> matrix[i][j] = A -> matrix[i][j] * number;
             }
         }
     } else {
@@ -31,13 +29,11 @@ int s21_mult_matrix(matrix_t *A, matrix_t *B, matrix_t *result) {
     if (is_valid_matrix(A) == SUCCESS && is_valid_matrix(B) == SUCCESS &&
                                     is_valid_pointer(result) == SUCCESS) {
         if (A -> columns == B -> rows) {
-            return_code = s21_create_matrix(A -> rows, B -> columns, result);
-            if (return_code == 0) {
-                for (int i = 0; i < A -> rows && return_code == 0; i++) {
-                    for (int j = 0; j < B -> columns; j++) {
-                        for (int k = 0; k < A -> columns; k++) {
-                            result -> matrix[i][j] += A -> matrix[i][k] * B -> matrix[k][j];
-                        }
+            s21_create_matrix(A -> rows, B -> columns, result);
+            for (int i = 0; i < A -> rows && return_code == 0; i++) {
+                for (int j = 0; j < B -> columns; j++) {
+                    for (int k = 0; k < A -> columns; k++) {
+                        result -> matrix[i][j] += A -> matrix[i][k] * B -> matrix[k][j];
                     }
                 }
             }

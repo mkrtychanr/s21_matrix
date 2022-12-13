@@ -6,12 +6,10 @@
 int s21_transpose(matrix_t *A, matrix_t *result) {
     int return_code = 0;
     if (is_valid_matrix(A) == SUCCESS && is_valid_pointer(result) == SUCCESS) {
-        return_code = s21_create_matrix(A -> columns, A -> rows, result);
-        if (return_code == 0) {
-            for (int i = 0; i < A -> rows; i++) {
-                for (int j = 0; j < A -> columns; j++) {
-                    result -> matrix[j][i] = A -> matrix[i][j];
-                }
+        s21_create_matrix(A -> columns, A -> rows, result);
+        for (int i = 0; i < A -> rows; i++) {
+            for (int j = 0; j < A -> columns; j++) {
+                result -> matrix[j][i] = A -> matrix[i][j];
             }
         }
     } else {
