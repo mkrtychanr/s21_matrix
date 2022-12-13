@@ -30,3 +30,18 @@ int s21_determinant(matrix_t *A, double *result) {
     }
     return return_code;
 }
+
+int s21_calc_complements(matrix_t *A, matrix_t *result) {
+    int return_code = 0;
+    if (is_valid_matrix(A) && is_valid_pointer(result)) {
+        if (A -> rows == A -> columns) {
+            s21_create_matrix(A -> rows, A -> rows, result);
+            fill_matrix_with_minors(A, result);
+        } else {
+            return_code = 2;
+        }
+    } else {
+        return_code = 1;
+    }
+    return return_code;
+}
