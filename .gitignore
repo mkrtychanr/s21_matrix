@@ -57,3 +57,4 @@ dkms.conf
 *.gcda
 *.gcno
 *.gcov
+main.c
