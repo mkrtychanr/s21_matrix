@@ -1,6 +1,5 @@
 #include "check_s21_operations.h"
 
-
 START_TEST(test_s21_sum_matrix) {
     matrix_t a;
     matrix_t b;
