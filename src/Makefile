@@ -34,7 +34,7 @@ test: clean $(LIB_NAME).a
 	$(CC) $(FLAGS) check.c tests/*.c $(LIB_NAME).a $(TST_LIBS) -o test
 
 main: $(LIB_NAME).a
-	$(CC) $(FLAGS) main.c -L. -l$(LIB_NAME) $(TST_LIBS) -o Main
+	$(CC) $(FLAGS) main.c $(LIB_NAME).a $(TST_LIBS) -o Main
 
 add_coverage_flag:
 	$(eval FLAGS += --coverage)
@@ -44,3 +44,4 @@ gcov_report: add_coverage_flag test
 	rm check*.gcda check*.gcno
 	gcov -b -l -p -c s21_*.gcno
 	gcovr -o gcov_report.html --html --html-details
+	open gcov_report.html
