@@ -9,12 +9,23 @@ int s21_create_matrix(int rows, int columns, matrix_t* result) {
         result -> rows = rows;
         result -> columns = columns;
         result -> matrix = (double**)malloc(rows * sizeof(double*));
-        for (int i = 0; i < rows; i++) {
-            result -> matrix[i] = (double*)malloc(columns * sizeof(double));
-        }
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                result -> matrix[i][j] = 0;
+        if (result -> matrix == NULL) {
+            return_code = 1;
+        } else {
+            for (int i = 0; i < rows; i++) {
+                result -> matrix[i] = (double*)malloc(columns * sizeof(double));
+                if (result -> matrix[i] == NULL) {
+                    for (int j = 0; j < i; j++) {
+                        free(result -> matrix[j]);
+                    }
+                    free(result);
+                    return_code = 1;
+                }
+            }
+            for (int i = 0; i < rows && return_code == 0; i++) {
+                for (int j = 0; j < columns; j++) {
+                    result -> matrix[i][j] = 0;
+                }
             }
         }
     } else {
