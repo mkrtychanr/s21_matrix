@@ -69,3 +69,37 @@ double det(double **a, int n) {
     free(temp);
     return sum;
 }
+
+void create_matrix_for_minor(matrix_t *A, int row, int column, matrix_t *result) {
+    s21_create_matrix(A -> rows - 1, A -> columns - 1, result);
+    int new_matrix_i = 0;
+    int new_matrix_j = 0;
+    for (int i = 0; i < A -> rows; i++) {
+        if (i != row) {
+            new_matrix_j = 0;
+            for (int j = 0; j < A -> columns; j++) {
+                if (j != column) {
+                    result -> matrix[new_matrix_i][new_matrix_j] = A -> matrix[i][j];
+                    new_matrix_j++;
+                }
+            }
+            new_matrix_i++;
+        }
+    }
+}
+
+void fill_matrix_with_minors(matrix_t *A, matrix_t *result) {
+    if (A -> rows == 1) {
+        s21_determinant(A, &result -> matrix[0][0]);
+    } else {
+        for (int i = 0; i < A -> rows; i++) {
+            for (int j = 0; j < A -> columns; j++) {
+                matrix_t temp_matrix_for_minor;
+                create_matrix_for_minor(A, i, j, &temp_matrix_for_minor);
+                s21_determinant(&temp_matrix_for_minor, &result -> matrix[i][j]);
+                result -> matrix[i][j] *= pow(-1, i * A -> rows + j);
+                s21_remove_matrix(&temp_matrix_for_minor);
+            }
+        }
+    }
+}
