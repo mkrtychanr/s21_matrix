@@ -1,4 +1,4 @@
-typedef matrix_struct matrix_t;
+typedef struct matrix_struct matrix_t;
 
 #ifndef SRC_MATRIX_H_
 #define SRC_MATRIX_H_
