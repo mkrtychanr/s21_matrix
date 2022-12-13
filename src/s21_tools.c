@@ -1,5 +1,6 @@
 #include "s21_tools.h"
 #include <stdlib.h>
+#include <math.h>
 
 int is_valid_pointer(void *a) {
     return (a != NULL) ? SUCCESS : FAILURE;
@@ -41,4 +42,30 @@ int sum_and_sub(matrix_t *A, matrix_t *B, matrix_t *result, char operation) {
         return_code = 1;
     }
     return return_code;
+}
+
+void new_pointer(double **a, double *b) {
+    *a = b;
+}
+
+double det(double **a, int n) {
+    if (n == 1) {
+        return a[0][0];
+    }
+    if (n == 2) {
+        return a[0][0] * a[1][1] - a[0][1] * a[1][0];
+    }
+    int number = 0;
+    double sum = 0;
+    double **temp = malloc((n-1) * sizeof(double*));
+    for (int i = 0; i < n; i++) {
+        number = 0;
+        for (int j = 0; j < n; j++) {
+            if (i == j) continue;
+            new_pointer(&temp[number++], a[j]);
+        }
+        sum +=  pow(-1, i + n - 1) * a[i][n-1] * det(temp, n - 1);
+    }
+    free(temp);
+    return sum;
 }
