@@ -3,7 +3,7 @@
 
 #include "s21_matrix.h"
 
-int is_valid_pointer(matrix_t *a);
+int is_valid_pointer(void *a);
 
 int is_valid_size(matrix_t *a);
 
