@@ -11,12 +11,18 @@ int is_valid_size(matrix_t *a) {
 }
 
 int is_valid_matrix(matrix_t *a) {
-    return (is_valid_pointer(a) == SUCCESS && is_valid_size(a) == SUCCESS) ? SUCCESS : FAILURE;
+    int status = (is_valid_pointer(a) == SUCCESS && is_valid_size(a) == SUCCESS && a -> matrix != NULL) ? SUCCESS : FAILURE;
+    for (int i = 0; i < a -> rows && status == SUCCESS; i++) {
+        if (a -> matrix[i] == NULL) {
+            status = FAILURE;
+        }
+    }
+    return status;
 }
 
 int sum_and_sub(matrix_t *A, matrix_t *B, matrix_t *result, char operation) {
     int return_code = 0;
-    if (is_valid_matrix(A) == SUCCESS && is_valid_matrix(B) == SUCCESS &&
+    if (A != NULL && B != NULL && is_valid_matrix(A) == SUCCESS && is_valid_matrix(B) == SUCCESS &&
                                     is_valid_pointer(result) == SUCCESS) {
         if (A -> rows == B -> rows && A -> columns == B -> columns) {
             s21_create_matrix(A -> rows, A -> columns, result);

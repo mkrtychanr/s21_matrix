@@ -23,21 +23,26 @@ int s21_create_matrix(int rows, int columns, matrix_t* result) {
     return return_code;
 }
 
+#include <stdio.h>
 void s21_remove_matrix(matrix_t *A) {
-    if (is_valid_pointer(A) == SUCCESS) {
+    if (A != NULL && is_valid_matrix(A) == SUCCESS && is_valid_pointer(A) == SUCCESS) {
         for (int i = 0; i < A -> rows; i++) {
-            free(A -> matrix[i]);
+            void* temp = A -> matrix[i];
+            free(temp);
+            A -> matrix[i] = NULL;
         }
-        free(A -> matrix);
+        void* temp = A -> matrix;
+        free(temp);
+        A -> matrix = NULL;
     }
 }
 
 int s21_eq_matrix(matrix_t *A, matrix_t *B) {
     int return_code = SUCCESS;
-    if (is_valid_matrix(A) == SUCCESS && is_valid_matrix(B) == SUCCESS) {
+    if (A != NULL && B != NULL && is_valid_matrix(A) == SUCCESS && is_valid_matrix(B) == SUCCESS && A -> rows == B -> rows && A -> columns == B -> columns) {
         for (int i = 0; i < A -> rows && return_code == SUCCESS; i++) {
             for (int j = 0; j < A -> columns && return_code == SUCCESS; j++) {
-                if (fabs(A -> matrix[i][j] - B -> matrix[i][j]) > 1E-6) {
+                if (fabs(A -> matrix[i][j] - B -> matrix[i][j]) > 1E-7) {
                     return_code = FAILURE;
                 }
             }

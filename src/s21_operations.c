@@ -1,5 +1,6 @@
 #include "s21_matrix.h"
 #include "s21_tools.h"
+#include <stdlib.h>
 
 int s21_sum_matrix(matrix_t *A, matrix_t *B, matrix_t *result) {
     return sum_and_sub(A, B, result, '+');
@@ -11,7 +12,7 @@ int s21_sub_matrix(matrix_t *A, matrix_t *B, matrix_t *result) {
 
 int s21_mult_number(matrix_t *A, double number, matrix_t *result) {
     int return_code = 0;
-    if (is_valid_matrix(A) == SUCCESS && is_valid_pointer(result) == SUCCESS) {
+    if (A != NULL && result != NULL && is_valid_matrix(A) == SUCCESS && is_valid_pointer(result) == SUCCESS) {
         s21_create_matrix(A -> rows, A -> columns, result);
         for (int i = 0; i < A -> rows; i++) {
             for (int j = 0; j < A -> columns; j++) {
@@ -26,7 +27,7 @@ int s21_mult_number(matrix_t *A, double number, matrix_t *result) {
 
 int s21_mult_matrix(matrix_t *A, matrix_t *B, matrix_t *result) {
     int return_code = 0;
-    if (is_valid_matrix(A) == SUCCESS && is_valid_matrix(B) == SUCCESS &&
+    if (A != NULL && B != NULL && result != NULL && is_valid_matrix(A) == SUCCESS && is_valid_matrix(B) == SUCCESS &&
                                     is_valid_pointer(result) == SUCCESS) {
         if (A -> columns == B -> rows) {
             s21_create_matrix(A -> rows, B -> columns, result);
